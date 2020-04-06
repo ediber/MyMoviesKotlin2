@@ -6,13 +6,16 @@ import com.e.mymovieskotlin.database.MoviesDatabase
 import com.e.mymovieskotlin.database.asDomainModel
 import com.e.mymovieskotlin.domain.Movie
 import com.e.mymovieskotlin.network.MoviesApiService
+import com.e.mymovieskotlin.network.MoviesList
 import com.e.mymovieskotlin.network.asDatabaseModel
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+const val TOP_RATED = "top_rated"
+const val UPCOMING = "upcoming"
+
 class MoviesRepository(private val database: MoviesDatabase) {
-
-
 
     val movies: LiveData<List<Movie>> =
         Transformations.map(database.movieDao.getMovies()) {
@@ -25,18 +28,20 @@ class MoviesRepository(private val database: MoviesDatabase) {
         }
 
 
-    suspend fun refreshMovieDbData() {
+    suspend fun refreshMovieDbData(type: String) {
         withContext(Dispatchers.IO) {
-            var getMoviesDeferred =
-                MoviesApiService.MovieApi.retrofitService.getTopRated()
+            database.movieDao.deleteAll(type)
+
+            var getMoviesDeferred : Deferred<MoviesList>
+            if (type == TOP_RATED){
+                getMoviesDeferred = MoviesApiService.MovieApi.retrofitService.getTopRated()
+            } else{
+                getMoviesDeferred = MoviesApiService.MovieApi.retrofitService.getUpcoming()
+            }
+
             var moviesList = getMoviesDeferred.await()
 
-            database.movieDao.insertAll(moviesList.asDatabaseModel())
-
-
-            /*   for ( movie in moviesList.asDatabaseModel()){
-                   database.movieDao.insertMovie(movie)
-               }*/
+            database.movieDao.insertAll(moviesList.asDatabaseModel(type))
         }
     }
 

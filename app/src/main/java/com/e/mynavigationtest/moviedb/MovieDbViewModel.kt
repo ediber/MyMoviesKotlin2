@@ -3,7 +3,6 @@ package com.e.mymovieskotlin.moviedb
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.e.mymovieskotlin.database.getDatabase
 import com.e.mymovieskotlin.domain.Movie
 import com.e.mymovieskotlin.repository.MoviesRepository
@@ -27,9 +26,9 @@ class MovieDbViewModel(application: Application) : AndroidViewModel(application)
             return _movies
         }
 
-    fun refreshMovieDbData() {
+    fun refreshMovieDbData(type: String) {
         coroutineScope.launch {
-            moviesRepository.refreshMovieDbData()
+            moviesRepository.refreshMovieDbData(type)
         }
     }
 

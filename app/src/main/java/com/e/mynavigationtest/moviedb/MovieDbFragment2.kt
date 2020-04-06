@@ -11,7 +11,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.mymovieskotlin.domain.Movie
-import com.e.mymovieskotlin.repository.MoviesRepository
+import com.e.mymovieskotlin.repository.TOP_RATED
+import com.e.mymovieskotlin.repository.UPCOMING
 import com.e.mynavigationtest.R
 
 /**
@@ -19,7 +20,9 @@ import com.e.mynavigationtest.R
  */
 class MovieDbFragment2 : Fragment() {
 
-    private var refresh: View? = null
+
+    private var top_rated: View? = null
+    private var upcoming: View? = null
     private var recycler: RecyclerView? = null
 
 
@@ -51,7 +54,8 @@ class MovieDbFragment2 : Fragment() {
 
         val save = view.findViewById<View>(R.id.fragment_movie_db_save)
         val cancel = view.findViewById<View>(R.id.fragment_movie_db_cancel)
-        refresh = view.findViewById<View>(R.id.fragment_movie_db_refresh)
+        top_rated = view.findViewById<View>(R.id.fragment_movie_db_refresh_top_rated)
+        upcoming = view.findViewById<View>(R.id.fragment_movie_db_refresh_upcoming)
 
         val adapter = MovieDbAdapter(object: MovieDbAdapter.ItemClickListener{
             override fun onClicked(movie: Movie) {
@@ -74,8 +78,12 @@ class MovieDbFragment2 : Fragment() {
             view.findNavController().popBackStack()
         })
 
-        refresh?.setOnClickListener(View.OnClickListener {
-            viewModel.refreshMovieDbData()
+        top_rated?.setOnClickListener(View.OnClickListener {
+            viewModel.refreshMovieDbData(TOP_RATED)
+        })
+
+        upcoming?.setOnClickListener(View.OnClickListener {
+            viewModel.refreshMovieDbData(UPCOMING)
         })
 
         return view

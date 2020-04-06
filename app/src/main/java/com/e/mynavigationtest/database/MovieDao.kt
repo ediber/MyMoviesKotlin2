@@ -2,7 +2,6 @@ package com.e.mymovieskotlin.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.e.mymovieskotlin.domain.Movie
 
 @Dao
 interface MovieDao {
@@ -32,5 +31,6 @@ interface MovieDao {
     @Query("select * from database_movie ")
     fun getMovieById() : LiveData<List<DatabaseMovie>>
 
-
+    @Query("DELETE FROM database_movie where list_type == :type")
+    fun deleteAll(type: String)
 }

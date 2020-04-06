@@ -19,6 +19,10 @@ class MoviesApiService {
         @GET("top_rated?api_key=a921476d861fb36a167704c00cb03bfb&language=en-US&page=1")
         fun getTopRated():
                 Deferred<MoviesList>
+
+        @GET("upcoming?api_key=a921476d861fb36a167704c00cb03bfb&language=en-US&page=1")
+        fun getUpcoming():
+                Deferred<MoviesList>
     }
 
     object MovieApi{

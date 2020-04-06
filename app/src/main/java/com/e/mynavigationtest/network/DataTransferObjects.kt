@@ -1,7 +1,6 @@
 package com.e.mymovieskotlin.network
 
 import com.e.mymovieskotlin.database.DatabaseMovie
-import com.e.mymovieskotlin.domain.Movie
 import com.squareup.moshi.Json
 
 data class MoviesList(
@@ -26,14 +25,15 @@ data class NetworkMovie(
     }
 }*/
 
-fun MoviesList.asDatabaseModel(): Array<DatabaseMovie> {
+fun MoviesList.asDatabaseModel(type: String): Array<DatabaseMovie> {
     return results.map { networkMovie ->
         DatabaseMovie(
             posterPath = networkMovie.posterPath,
             title = networkMovie.title,
             isSelected = false,
             popularity = networkMovie.popularity,
-            overview = networkMovie.overview
+            overview = networkMovie.overview,
+            listType = type
         )
     }.toTypedArray()
 }

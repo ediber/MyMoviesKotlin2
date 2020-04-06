@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".moviedb.MovieDbFragment2">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,14 +37,41 @@
             app:layout_constraintStart_toEndOf="@+id/fragment_movie_db_save" />
 
         <Button
-            android:id="@+id/fragment_movie_db_refresh"
+            android:id="@+id/fragment_movie_db_refresh_top_rated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:text="refresh"
+            android:layout_marginTop="24dp"
+            android:text="refresh_top_rated"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.145"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_movie_db_recycler" />
+
+        <Button
+            android:id="@+id/fragment_movie_db_refresh_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="refresh_upcoming"
+            app:layout_constraintStart_toStartOf="@+id/fragment_movie_db_refresh_top_rated"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_movie_db_refresh_top_rated" />
+
+        <Button
+            android:id="@+id/fragment_movie_db_show_top_rated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:text="show top rated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_movie_db_refresh_top_rated" />
+
+        <Button
+            android:id="@+id/fragment_movie_db_show_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="show upcoming"
+            app:layout_constraintStart_toStartOf="@+id/fragment_movie_db_show_top_rated"
+            app:layout_constraintTop_toTopOf="@+id/fragment_movie_db_refresh_upcoming" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

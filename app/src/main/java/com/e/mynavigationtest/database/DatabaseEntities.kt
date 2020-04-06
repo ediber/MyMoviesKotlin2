@@ -24,7 +24,10 @@ data class DatabaseMovie(
     @ColumnInfo(name = "is_selected")
     val isSelected: Boolean = false,
 
-    val overview: String
+    val overview: String,
+
+    @ColumnInfo(name = "list_type")
+    val listType: String
 )
 
 
