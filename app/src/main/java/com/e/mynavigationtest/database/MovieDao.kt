@@ -8,6 +8,9 @@ interface MovieDao {
     @Query("select * from database_movie")
     fun getMovies(): LiveData<List<DatabaseMovie>>
 
+    @Query("select * from database_movie where list_type == :type")
+    fun getMovies(type: String): LiveData<List<DatabaseMovie>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: Array<DatabaseMovie>)
 
@@ -33,4 +36,6 @@ interface MovieDao {
 
     @Query("DELETE FROM database_movie where list_type == :type")
     fun deleteAll(type: String)
+
+
 }

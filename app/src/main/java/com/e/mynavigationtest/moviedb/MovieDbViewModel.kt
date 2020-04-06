@@ -26,6 +26,18 @@ class MovieDbViewModel(application: Application) : AndroidViewModel(application)
             return _movies
         }
 
+    private val _topRatedMovies = moviesRepository.topRatedMovies
+    val topRatedMovies: LiveData<List<Movie>>
+        get() {
+            return _topRatedMovies
+        }
+
+    private val _upcomingMovies = moviesRepository.upcomingMovies
+    val upcomingMovies: LiveData<List<Movie>>
+        get() {
+            return _upcomingMovies
+        }
+
     fun refreshMovieDbData(type: String) {
         coroutineScope.launch {
             moviesRepository.refreshMovieDbData(type)
@@ -37,6 +49,7 @@ class MovieDbViewModel(application: Application) : AndroidViewModel(application)
             moviesRepository.updateMovie(movie)
         }
     }
+
 
 
 }

@@ -27,6 +27,15 @@ class MoviesRepository(private val database: MoviesDatabase) {
             it.asDomainModel()
         }
 
+    var topRatedMovies: LiveData<List<Movie>> =
+        Transformations.map(database.movieDao.getMovies(TOP_RATED)) {
+            it.asDomainModel()
+        }
+
+    var upcomingMovies: LiveData<List<Movie>> =
+        Transformations.map(database.movieDao.getMovies(UPCOMING)) {
+            it.asDomainModel()
+        }
 
     suspend fun refreshMovieDbData(type: String) {
         withContext(Dispatchers.IO) {
@@ -71,6 +80,8 @@ class MoviesRepository(private val database: MoviesDatabase) {
 
         return currentMovieInList
     }
+
+
 
 
 }

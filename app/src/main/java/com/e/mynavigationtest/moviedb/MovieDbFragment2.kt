@@ -21,8 +21,10 @@ import com.e.mynavigationtest.R
 class MovieDbFragment2 : Fragment() {
 
 
-    private var top_rated: View? = null
-    private var upcoming: View? = null
+    private var show_upcoming: View? = null
+    private var show_top_rated: View? = null
+    private var refresh_top_rated: View? = null
+    private var refresh_upcoming: View? = null
     private var recycler: RecyclerView? = null
 
 
@@ -54,8 +56,10 @@ class MovieDbFragment2 : Fragment() {
 
         val save = view.findViewById<View>(R.id.fragment_movie_db_save)
         val cancel = view.findViewById<View>(R.id.fragment_movie_db_cancel)
-        top_rated = view.findViewById<View>(R.id.fragment_movie_db_refresh_top_rated)
-        upcoming = view.findViewById<View>(R.id.fragment_movie_db_refresh_upcoming)
+        refresh_top_rated = view.findViewById<View>(R.id.fragment_movie_db_refresh_top_rated)
+        refresh_upcoming = view.findViewById<View>(R.id.fragment_movie_db_refresh_upcoming)
+        show_top_rated = view.findViewById<View>(R.id.fragment_movie_db_show_top_rated)
+        show_upcoming = view.findViewById<View>(R.id.fragment_movie_db_show_upcoming)
 
         val adapter = MovieDbAdapter(object: MovieDbAdapter.ItemClickListener{
             override fun onClicked(movie: Movie) {
@@ -78,12 +82,28 @@ class MovieDbFragment2 : Fragment() {
             view.findNavController().popBackStack()
         })
 
-        top_rated?.setOnClickListener(View.OnClickListener {
+        refresh_top_rated?.setOnClickListener(View.OnClickListener {
             viewModel.refreshMovieDbData(TOP_RATED)
         })
 
-        upcoming?.setOnClickListener(View.OnClickListener {
+        refresh_upcoming?.setOnClickListener(View.OnClickListener {
             viewModel.refreshMovieDbData(UPCOMING)
+        })
+
+        show_top_rated?.setOnClickListener(View.OnClickListener {
+            viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { lst ->
+                lst?.let {
+                    adapter.data = lst
+                }
+            })
+        })
+
+        show_upcoming?.setOnClickListener(View.OnClickListener {
+            viewModel.upcomingMovies.observe(viewLifecycleOwner, Observer { lst ->
+                lst?.let {
+                    adapter.data = lst
+                }
+            })
         })
 
         return view

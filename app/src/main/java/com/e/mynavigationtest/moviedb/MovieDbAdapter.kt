@@ -43,11 +43,6 @@ class MovieDbAdapter(val listener: ItemClickListener): RecyclerView.Adapter<Movi
             .into(holder.image)
 
         holder.parent.setOnClickListener(View.OnClickListener {
-         /*   if(! item.isSelected){
-                it.setBackgroundColor(Color.YELLOW)
-            } else {
-                it.setBackgroundColor(0)
-            }*/
             item.isSelected = ! item.isSelected
             listener.onClicked(item)
         })
