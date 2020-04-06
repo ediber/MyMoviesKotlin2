@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/selectedFragment">
+    <fragment
+        android:id="@+id/selectedFragment"
+        android:name="com.e.mymovieskotlin.selected.SelectedFragment"
+        android:label="SelectedFragment" >
+        <action
+            android:id="@+id/action_selectedFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_selectedFragment_to_movieDbFragment2"
+            app:destination="@id/movieDbFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.e.mymovieskotlin.details.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="poster_path"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDbFragment2"
+        android:name="com.e.mymovieskotlin.moviedb.MovieDbFragment2"
+        android:label="MovieDbFragment2" />
+</navigation>
