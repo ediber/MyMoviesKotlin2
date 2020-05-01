@@ -14,6 +14,7 @@ import com.e.mymovieskotlin.domain.Movie
 import com.e.mymovieskotlin.repository.TOP_RATED
 import com.e.mymovieskotlin.repository.UPCOMING
 import com.e.mynavigationtest.R
+import kotlinx.android.synthetic.main.fragment_movie_db2.*
 
 /**
  * A simple [Fragment] subclass.
@@ -21,11 +22,11 @@ import com.e.mynavigationtest.R
 class MovieDbFragment2 : Fragment() {
 
 
-    private var show_upcoming: View? = null
+/*    private var show_upcoming: View? = null
     private var show_top_rated: View? = null
     private var refresh_top_rated: View? = null
     private var refresh_upcoming: View? = null
-    private var recycler: RecyclerView? = null
+    private var recycler: RecyclerView? = null*/
 
 
 
@@ -54,12 +55,24 @@ class MovieDbFragment2 : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_movie_db2, container, false)
 
-        val save = view.findViewById<View>(R.id.fragment_movie_db_save)
+/*        val save = view.findViewById<View>(R.id.fragment_movie_db_save)
         val cancel = view.findViewById<View>(R.id.fragment_movie_db_cancel)
         refresh_top_rated = view.findViewById<View>(R.id.fragment_movie_db_refresh_top_rated)
         refresh_upcoming = view.findViewById<View>(R.id.fragment_movie_db_refresh_upcoming)
         show_top_rated = view.findViewById<View>(R.id.fragment_movie_db_show_top_rated)
-        show_upcoming = view.findViewById<View>(R.id.fragment_movie_db_show_upcoming)
+        show_upcoming = view.findViewById<View>(R.id.fragment_movie_db_show_upcoming)*/
+
+
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        fragment_movie_db_refresh_top_rated.setOnClickListener(View.OnClickListener {
+            viewModel.refreshMovieDbData(TOP_RATED)
+        })
 
         val adapter = MovieDbAdapter(object: MovieDbAdapter.ItemClickListener{
             override fun onClicked(movie: Movie) {
@@ -67,9 +80,8 @@ class MovieDbFragment2 : Fragment() {
             }
 
         })
-        recycler = view.findViewById<RecyclerView>(R.id.fragment_movie_db_recycler)
-        recycler?.adapter = adapter
-        recycler?.layoutManager = LinearLayoutManager(context)
+        fragment_movie_db_recycler?.adapter = adapter
+        fragment_movie_db_recycler?.layoutManager = LinearLayoutManager(context)
 
         viewModel.movies.observe(viewLifecycleOwner, Observer { lst ->
             lst?.let {
@@ -77,36 +89,33 @@ class MovieDbFragment2 : Fragment() {
             }
         })
 
-        cancel.setOnClickListener(View.OnClickListener {
+        fragment_movie_db_cancel.setOnClickListener(View.OnClickListener {
             // getFragmentManager().popBackStack()
             view.findNavController().popBackStack()
         })
 
-        refresh_top_rated?.setOnClickListener(View.OnClickListener {
-            viewModel.refreshMovieDbData(TOP_RATED)
-        })
 
-        refresh_upcoming?.setOnClickListener(View.OnClickListener {
+        fragment_movie_db_refresh_upcoming?.setOnClickListener(View.OnClickListener {
             viewModel.refreshMovieDbData(UPCOMING)
         })
 
-        show_top_rated?.setOnClickListener(View.OnClickListener {
+        fragment_movie_db_refresh_top_rated?.setOnClickListener(View.OnClickListener {
             viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { lst ->
                 lst?.let {
                     adapter.data = lst
                 }
             })
+
+            //    viewModel.switchToTopRated()
         })
 
-        show_upcoming?.setOnClickListener(View.OnClickListener {
+        fragment_movie_db_show_upcoming?.setOnClickListener(View.OnClickListener {
             viewModel.upcomingMovies.observe(viewLifecycleOwner, Observer { lst ->
                 lst?.let {
                     adapter.data = lst
                 }
             })
         })
-
-        return view
     }
 
 }

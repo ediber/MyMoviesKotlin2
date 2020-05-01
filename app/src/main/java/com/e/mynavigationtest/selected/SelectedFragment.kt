@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.e.mymovieskotlin.domain.Movie
 import com.e.mynavigationtest.R
+import kotlinx.android.synthetic.main.fragment_selected_temp.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,7 +44,15 @@ class SelectedFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_selected_temp, container, false)
 
-        view.findViewById<View>(R.id.selected_open_moviedb).setOnClickListener(View.OnClickListener {
+
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        selected_open_moviedb.setOnClickListener(View.OnClickListener {
             view.findNavController().navigate(SelectedFragmentDirections.actionSelectedFragmentToMovieDbFragment2())
         })
 
@@ -57,15 +66,11 @@ class SelectedFragment : Fragment() {
             }
         })
 
-        val recycler = view.findViewById<RecyclerView>(R.id.selected_recycler)
-        recycler.adapter = adapter
-        recycler.layoutManager = LinearLayoutManager(context)
+        selected_recycler.adapter = adapter
+        selected_recycler.layoutManager = LinearLayoutManager(context)
 
         viewModel.selectedMovies.observe(viewLifecycleOwner, Observer {
             adapter.data = it
         })
-
-        return view
     }
-
 }

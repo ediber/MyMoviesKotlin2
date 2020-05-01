@@ -50,6 +50,12 @@ class MovieDbViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+/*    fun switchToTopRated() {
+        _movies.value = moviesRepository.topRatedMovies.value
+    }
 
+    fun switchToUpcoming() {
+        _movies.value = moviesRepository.upcomingMovies.value
+    }*/
 
 }
