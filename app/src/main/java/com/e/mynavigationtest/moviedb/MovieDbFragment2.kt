@@ -70,9 +70,7 @@ class MovieDbFragment2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragment_movie_db_refresh_top_rated.setOnClickListener(View.OnClickListener {
-            viewModel.refreshMovieDbData(TOP_RATED)
-        })
+
 
         val adapter = MovieDbAdapter(object: MovieDbAdapter.ItemClickListener{
             override fun onClicked(movie: Movie) {
@@ -99,7 +97,7 @@ class MovieDbFragment2 : Fragment() {
             viewModel.refreshMovieDbData(UPCOMING)
         })
 
-        fragment_movie_db_refresh_top_rated?.setOnClickListener(View.OnClickListener {
+        fragment_movie_db_show_top_rated?.setOnClickListener(View.OnClickListener {
             viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { lst ->
                 lst?.let {
                     adapter.data = lst
@@ -107,6 +105,10 @@ class MovieDbFragment2 : Fragment() {
             })
 
             //    viewModel.switchToTopRated()
+        })
+
+        fragment_movie_db_refresh_top_rated.setOnClickListener(View.OnClickListener {
+            viewModel.refreshMovieDbData(TOP_RATED)
         })
 
         fragment_movie_db_show_upcoming?.setOnClickListener(View.OnClickListener {
