@@ -3,6 +3,8 @@ package com.e.mymovieskotlin.moviedb
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.e.mymovieskotlin.database.getDatabase
 import com.e.mymovieskotlin.domain.Movie
 import com.e.mymovieskotlin.repository.MoviesRepository
@@ -20,23 +22,32 @@ class MovieDbViewModel(application: Application) : AndroidViewModel(application)
 
     private val moviesRepository = MoviesRepository(database)
 
-    private val _movies = moviesRepository.movies
+    internal enum class Sort {
+        TOP_RATED, UPCOMING, ALL
+    }
+
+    private val _sortLive = MutableLiveData<Sort>()
+
+    private lateinit var _movies: LiveData<List<Movie>>
+
     val movies: LiveData<List<Movie>>
         get() {
             return _movies
         }
 
-    private val _topRatedMovies = moviesRepository.topRatedMovies
-    val topRatedMovies: LiveData<List<Movie>>
-        get() {
-            return _topRatedMovies
-        }
+    init {
 
-    private val _upcomingMovies = moviesRepository.upcomingMovies
-    val upcomingMovies: LiveData<List<Movie>>
-        get() {
-            return _upcomingMovies
-        }
+        _movies =
+            Transformations.switchMap(_sortLive) {
+                when (it){
+                    Sort.TOP_RATED -> moviesRepository.topRatedMovies
+                    Sort.UPCOMING -> moviesRepository.upcomingMovies
+                    Sort.ALL -> moviesRepository.movies
+                }
+            }
+
+    }
+
 
     fun refreshMovieDbData(type: String) {
         coroutineScope.launch {
@@ -50,12 +61,16 @@ class MovieDbViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-/*    fun switchToTopRated() {
-        _movies.value = moviesRepository.topRatedMovies.value
+    fun switchToTopRated() {
+        _sortLive.postValue(Sort.TOP_RATED)
     }
 
     fun switchToUpcoming() {
-        _movies.value = moviesRepository.upcomingMovies.value
-    }*/
+        _sortLive.postValue(Sort.UPCOMING)
+    }
+
+    fun switchToAll() {
+        _sortLive.postValue(Sort.ALL)
+    }
 
 }

@@ -92,32 +92,26 @@ class MovieDbFragment2 : Fragment() {
             view.findNavController().popBackStack()
         })
 
-
-        fragment_movie_db_refresh_upcoming?.setOnClickListener(View.OnClickListener {
-            viewModel.refreshMovieDbData(UPCOMING)
+        fragment_movie_db_show_top_rated?.setOnClickListener(View.OnClickListener {
+                viewModel.switchToTopRated()
         })
 
-        fragment_movie_db_show_top_rated?.setOnClickListener(View.OnClickListener {
-            viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { lst ->
-                lst?.let {
-                    adapter.data = lst
-                }
-            })
+        fragment_movie_db_show_upcoming?.setOnClickListener(View.OnClickListener {
+            viewModel.switchToUpcoming()
+        })
 
-            //    viewModel.switchToTopRated()
+        fragment_movie_db_show_all.setOnClickListener(View.OnClickListener {
+            viewModel.switchToAll()
         })
 
         fragment_movie_db_refresh_top_rated.setOnClickListener(View.OnClickListener {
             viewModel.refreshMovieDbData(TOP_RATED)
         })
 
-        fragment_movie_db_show_upcoming?.setOnClickListener(View.OnClickListener {
-            viewModel.upcomingMovies.observe(viewLifecycleOwner, Observer { lst ->
-                lst?.let {
-                    adapter.data = lst
-                }
-            })
+        fragment_movie_db_refresh_upcoming?.setOnClickListener(View.OnClickListener {
+            viewModel.refreshMovieDbData(UPCOMING)
         })
+
     }
 
 }

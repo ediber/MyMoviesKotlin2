@@ -72,6 +72,15 @@
             android:text="show upcoming"
             app:layout_constraintStart_toStartOf="@+id/fragment_movie_db_show_top_rated"
             app:layout_constraintTop_toTopOf="@+id/fragment_movie_db_refresh_upcoming" />
+
+        <Button
+            android:id="@+id/fragment_movie_db_show_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="ahow all"
+            app:layout_constraintStart_toStartOf="@+id/fragment_movie_db_show_upcoming"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_movie_db_show_upcoming" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
